@@ -1,46 +1,27 @@
-知乎用户信息递归爬虫
-这是一个基于 Python 的递归爬虫，用于爬取知乎用户的回答信息及其关注者关系网络。通过 BFS 算法实现多级递归爬取，支持自定义爬取深度和每用户最大关注者数量。
-功能特性
-🌐 基于浏览器自动化（DrissionPage）实现数据抓取
-📊 自动保存用户回答信息到 CSV 文件
-🔍 递归爬取关注者关系网络（BFS 算法）
-⚙️ 支持自定义爬取深度和每用户最大关注者数
-⏳ 随机延迟机制避免反爬
-🛠️ 自动处理内容解析和异常情况
+# Zhihu User Recursive Spider 🌐
 
-1.修改启动参数（可选）：
+基于 Python 的递归爬虫，用于爬取知乎用户的回答信息及关注者关系网络。采用 BFS 算法实现多级递归爬取，支持自定义深度和关注者数量限制。
+
+[![Python](https://img.shields.io/badge/Python-3.7%2B-blue)](https://www.python.org/)
+[![DrissionPage](https://img.shields.io/badge/DrissionPage-✔-green)](https://github.com/g1879/DrissionPage)
+
+## 功能特性 ✨
+- 🌐 基于浏览器自动化（DrissionPage）实现数据抓取
+- 📊 自动保存用户回答信息到 CSV 文件
+- 🔍 递归爬取关注者关系网络（BFS 算法）
+- ⚙️ 支持自定义爬取深度和每用户最大关注者数
+- ⏳ 随机延迟机制避免反爬（5-10秒）
+- 🛠️ 自动处理内容解析和异常情况
+
+## 快速开始 🚀
+```python
+# 初始化爬虫（示例配置）
 spider = ZhihuRecursiveSpider(
     max_depth=3,            # 最大递归深度（0:仅自己）
     max_followers=500000,   # 每用户最大获取关注者数
     csv_filename='D:/data/用户2.csv'  # 数据存储路径
 )
 
-2.设置初始用户（修改start_token）：
-start_token = "zhuruai"  # 替换为目标用户的url_token
-
-参数说明
-参数	默认值	说明
-max_depth	3	爬取深度：0-仅初始用户，1-初始用户+直接关注者，依此类推
-max_followers	500000	每个用户最多爬取的关注者数量（防止大V用户数据量过大）
-csv_filename	用户2.csv	数据存储路径，建议使用绝对路径
-delay	5-10秒	随机请求间隔（自动设置，防止反爬）
-注意事项
-首次运行会自动创建 CSV 文件并写入表头
-确保存储路径有写入权限（特别是 Windows 系统需注意路径权限）
-建议在非高峰时段运行以避免被限制
-若被反爬，可尝试：
-增加随机延迟范围
-减少 max_followers 数值
-使用代理 IP
-
-关注知乎 robots.txt 协议，合理控制爬取频率
-
-数据字段说明
-包含 42 个字段，涵盖：
-用户基础信息（ID、昵称、头像、性别等）
-回答内容（文本内容、点赞数、评论数等）
-问题信息（标题、创建时间、URL 等）
-社交关系（是否作者、是否认证等）
-内容状态（是否可评论、是否被折叠等）
-
-完整字段见代码中的 CSV 写入部分。
+# 设置初始用户
+start_token = "zhuruai"     # 替换为目标用户的url_token
+spider.run(start_token)
